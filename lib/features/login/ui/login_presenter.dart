@@ -15,8 +15,6 @@ class LoginPresenter extends Presenter<LoginBloc, LoginViewModel, LoginScreen> {
         return;
       } else if (viewModel.serviceStatus == ServiceStatus.fail) {
         _showErrorDialog(context);
-      } else if (viewModel.serviceStatus == ServiceStatus.unknown) {
-        _showInvalidDataDialog(context);
       }
     });
     return LoginScreen(
@@ -28,6 +26,7 @@ class LoginPresenter extends Presenter<LoginBloc, LoginViewModel, LoginScreen> {
         _onChangePassword(bloc, value);
       },
       onTapAccountOnline: () => navigateToAccountRegistrationScreen(context),
+      onTapSubmit: () => _onTapSubmit(bloc, context),
     );
   }
 
@@ -40,9 +39,9 @@ class LoginPresenter extends Presenter<LoginBloc, LoginViewModel, LoginScreen> {
   }
 
   // Add back in when login is added
-  // void _onTapSubmit(LoginBloc bloc) {
-  //   bloc.submitPipe.launch();
-  // }
+  void _onTapSubmit(LoginBloc bloc, BuildContext context) {
+    _showInvalidDataDialog(context);
+  }
 
   @override
   Stream<LoginViewModel> getViewModelStream(LoginBloc bloc) {
@@ -70,7 +69,7 @@ class LoginPresenter extends Presenter<LoginBloc, LoginViewModel, LoginScreen> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              CFRouterScope.of(context).pop();
+              Navigator.of(context).pop();
             },
             child: Text('OK'),
           )
@@ -88,7 +87,7 @@ class LoginPresenter extends Presenter<LoginBloc, LoginViewModel, LoginScreen> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              CFRouterScope.of(context).pop();
+              Navigator.of(context).pop();
             },
             child: Text('OK'),
           )

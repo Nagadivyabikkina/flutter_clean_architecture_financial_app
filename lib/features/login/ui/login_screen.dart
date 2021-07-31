@@ -22,22 +22,28 @@ class LoginScreen extends Screen {
     final media = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.blue.withOpacity(0.7),
+        title: Text(
+          'Login Online',
+        ),
+      ),
+      backgroundColor: Colors.grey[300],
       body: Form(
         child: ListView(
           physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
-            SizedBox(height: media.width * .2),
+            SizedBox(height: media.width * .1),
             Container(
-              color: Colors.white.withOpacity(.8),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 12),
                 child: Text(
-                  'Securely access information',
+                  'Securely access financial information',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black54,
+                    fontSize: 18,
+                    color: Colors.blue,
                   ),
                 ),
               ),
@@ -51,9 +57,6 @@ class LoginScreen extends Screen {
             SizedBox(height: media.width * .02),
             ElevatedButton(
               key: Key('login_button_key'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-              ),
               onPressed: onTapSubmit as void Function()?,
               child: Text('Login', style: TextStyle(color: Colors.white)),
             ),
