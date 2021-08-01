@@ -3,11 +3,14 @@ import 'package:clean_framework/clean_framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/model/new_online_registration_form_entry/new_online_registration_enums.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/model/new_online_registration_success/new_online_registration_success_view_model.dart';
+import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/ui/new_online_registration_success_screen/new_online_registration_success_presenter.dart';
 
 class NewOnlineRegistrationSuccessScreen extends Screen {
   final NewOnlineRegistrationRequestSuccessViewModel viewModel;
+  final NewOnlineRegistrationConfirmPresenterActions presenterAction;
   NewOnlineRegistrationSuccessScreen({
     required this.viewModel,
+    required this.presenterAction,
   });
 
   @override
@@ -16,12 +19,24 @@ class NewOnlineRegistrationSuccessScreen extends Screen {
     print(viewModel.serviceResponseStatus);
     return Scaffold(
         appBar: AppBar(
+          leading: Container(),
           backgroundColor: Colors.blue,
           title: AutoSizeText(
             'REGISTRATION CONFIRMATION',
             maxFontSize: 16,
             minFontSize: 10,
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.close,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                presenterAction.popNavigationListener(context);
+              },
+            )
+          ],
         ),
         backgroundColor: Colors.grey[300],
         body: viewModel.serviceResponseStatus ==

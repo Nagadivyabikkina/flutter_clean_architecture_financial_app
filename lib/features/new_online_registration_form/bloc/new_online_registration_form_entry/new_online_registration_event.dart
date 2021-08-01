@@ -21,7 +21,6 @@ class UpdateCardHolderNameRequestEvent extends NewOnlineRegistrationEvent {
   bool get stringify => true;
 }
 
-
 class UpdateCardHolderNumberRequestEvent extends NewOnlineRegistrationEvent {
   final String cardNumber;
 

@@ -33,7 +33,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Register Account online'), findsOneWidget);
       expect(find.text('Login'), findsOneWidget);
-      expect(find.text('Securely access information'), findsOneWidget);
+      expect(
+          find.text('Securely access financial information'), findsOneWidget);
       expect(find.byKey(const Key('usename_key')), findsOneWidget);
       expect(find.byKey(const Key('password_key')), findsOneWidget);
     });

@@ -7,7 +7,7 @@ import 'package:flutter_clean_architecture_financial_app/features/new_online_reg
 import 'package:flutter_clean_architecture_financial_app/locator.dart';
 
 class NewOnlineRegistrationRequestSuccessUseCase extends UseCase {
-  RepositoryScope? __scopeRegistrationStatusResponse;
+  RepositoryScope? _scopeRegistrationStatusResponse;
   final ViewModelCallback<ViewModel> _viewModelCallBack;
 
   NewOnlineRegistrationRequestSuccessUseCase(
@@ -15,13 +15,13 @@ class NewOnlineRegistrationRequestSuccessUseCase extends UseCase {
       : _viewModelCallBack = viewModelCallBack;
 
   Future<void> create() async {
-    __scopeRegistrationStatusResponse = ExampleLocator()
+    _scopeRegistrationStatusResponse = ExampleLocator()
         .repository
         .create<NewOnlineRegistrationEntity>(
             NewOnlineRegistrationEntity(), _notifySubscribers);
 
     await ExampleLocator().repository.runServiceAdapter(
-        __scopeRegistrationStatusResponse!,
+        _scopeRegistrationStatusResponse!,
         NewOnlineRegistrationRequestServiceAdapter());
 
     sendViewModelToSubscribers();
@@ -29,12 +29,24 @@ class NewOnlineRegistrationRequestSuccessUseCase extends UseCase {
 
   void sendViewModelToSubscribers() {
     NewOnlineRegistrationEntity newOnlineRegistrationEntity =
-        ExampleLocator().repository.get(__scopeRegistrationStatusResponse!);
+        ExampleLocator().repository.get(_scopeRegistrationStatusResponse!);
     _notifySubscribers(newOnlineRegistrationEntity);
   }
 
   void _notifySubscribers(entity) {
     _viewModelCallBack(buildViewModel(entity));
+  }
+
+  void resetViewModel() {
+    final emptyEntity = NewOnlineRegistrationEntity(
+        cardHolderName: '',
+        cardNumber: '',
+        email: '',
+        userPassword: '',
+        validThru: '');
+    ExampleLocator().repository.update<NewOnlineRegistrationEntity>(
+        _scopeRegistrationStatusResponse!, emptyEntity);
+    _notifySubscribers(emptyEntity);
   }
 
   NewOnlineRegistrationRequestSuccessViewModel buildViewModel(

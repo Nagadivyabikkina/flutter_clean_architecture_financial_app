@@ -3,6 +3,7 @@ import 'package:flutter_clean_architecture_financial_app/dependency/card_scanner
 import 'package:flutter_clean_architecture_financial_app/dependency/permission_handler_plugin.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/bloc/new_online_registration_form_entry/new_online_registration_event.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/bloc/new_online_registration_form_entry/new_online_registration_usecase.dart';
+import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/bloc/new_online_registration_success/new_online_registration_success_event.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/bloc/new_online_registration_success/new_online_registration_success_usecase.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/model/new_online_registration_form_entry/new_online_registration_view_model.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/model/new_online_registration_success/new_online_registration_success_view_model.dart';
@@ -10,6 +11,9 @@ import 'package:flutter_clean_architecture_financial_app/features/new_online_reg
 class NewOnlineRegistrationBloc extends Bloc {
   final newOnlineRegistrationEventsPipe =
       Pipe<NewOnlineRegistrationEvent>(canSendDuplicateData: true);
+
+  final newOnlineRegistrationConfirmEventEventPipe =
+      Pipe<NewOnlineRegistrationConfirmEvent>(canSendDuplicateData: true);
 
   NewOnlineRegistrationRequestUseCase? _newOnlineRegistrationRequestUseCase;
   final newOnlineRegistrationViewModelPipe =
@@ -46,6 +50,9 @@ class NewOnlineRegistrationBloc extends Bloc {
                     viewModel as NewOnlineRegistrationRequestSuccessViewModel));
     newOnlineRegistrationSuccessViewModelPipe
         .whenListenedDo(_newOnlineRegistrationRequestSuccessUseCase!.create);
+    newOnlineRegistrationConfirmEventEventPipe.receive.listen((event) {
+      newOnlineRegistrationConfirmEventPipeHandler(event);
+    });
   }
 
   @override
@@ -53,6 +60,7 @@ class NewOnlineRegistrationBloc extends Bloc {
     newOnlineRegistrationEventsPipe.dispose();
     newOnlineRegistrationViewModelPipe.dispose();
     newOnlineRegistrationSuccessViewModelPipe.dispose();
+    newOnlineRegistrationConfirmEventEventPipe.dispose();
   }
 
   newOnlineRegistrationEventsPipeHandler(NewOnlineRegistrationEvent event) {
@@ -75,6 +83,13 @@ class NewOnlineRegistrationBloc extends Bloc {
     } else if (event is UpdateEmailAddressRequestEvent) {
       _newOnlineRegistrationRequestUseCase!.updateEmailAddress(event.email);
       return;
+    }
+  }
+
+  void newOnlineRegistrationConfirmEventPipeHandler(
+      NewOnlineRegistrationConfirmEvent event) {
+    if (event is ResetNewOnlineRegistrationViewModelEvent) {
+      _newOnlineRegistrationRequestSuccessUseCase!.resetViewModel();
     }
   }
 

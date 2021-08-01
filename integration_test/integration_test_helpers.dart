@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:flutter_clean_architecture_financial_app/main.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'new_online_registration_feature_success_test.dart';
 
 final _helperName = "Integration test helper";
 late WidgetTester _tester;
