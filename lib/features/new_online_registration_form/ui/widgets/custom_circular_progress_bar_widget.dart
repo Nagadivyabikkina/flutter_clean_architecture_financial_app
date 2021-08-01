@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +7,8 @@ class CustomCircularProgressBar extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: AutoSizeText(
+          title: Text(
             'REGISTRATION CONFIRMATION',
-            maxFontSize: 16,
-            minFontSize: 10,
           ),
         ),
         backgroundColor: Colors.grey[300],

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clean_framework/clean_framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_financial_app/features/new_online_registration_form/model/new_online_registration_form_entry/new_online_registration_enums.dart';
@@ -21,10 +20,8 @@ class NewOnlineRegistrationSuccessScreen extends Screen {
         appBar: AppBar(
           leading: Container(),
           backgroundColor: Colors.blue,
-          title: AutoSizeText(
+          title: Text(
             'REGISTRATION CONFIRMATION',
-            maxFontSize: 16,
-            minFontSize: 10,
           ),
           actions: <Widget>[
             IconButton(
